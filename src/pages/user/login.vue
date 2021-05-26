@@ -56,7 +56,10 @@
 </template>
 
 <script>
+import users from '../../mixins/users'
+
 export default {
+  mixins: [users],
   data () {
     return {
       show: false,
@@ -72,7 +75,7 @@ export default {
   },
   methods: {
     onSubmit () {
-      console.log('ok')
+      this.login(this.userInfo)
     },
     onReset () {
       this.userInfo = { id: '', password: '' }

@@ -9,7 +9,7 @@ export default {
     clock () {
       moment.locale('ko')
       setInterval(() => {
-        this.time = moment().format('YYYY-MM-DD h:mm:ss a dddd')
+        this.time = moment()
       }, 1000)
     }
   }
