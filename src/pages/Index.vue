@@ -24,28 +24,17 @@
 </template>
 
 <script>
-import moment from 'moment'
-import clock from '../mixins/clock'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'PageIndex',
-  mixins: [clock],
   computed: {
-    days () {
-      return moment(this.time).format('YYYY/MM/DD')
-    },
-    wDays () {
-      return moment(this.time).format('dddd')
-    },
-    times () {
-      return moment(this.time).format('hh:mm:ss')
-    },
-    ampm () {
-      return moment(this.time).format('a')
-    }
-  },
-  mounted () {
-    this.clock()
+    ...mapGetters({
+      days: 'clock/days',
+      wDays: 'clock/wDays',
+      times: 'clock/times',
+      ampm: 'clock/ampm'
+    })
   }
 }
 </script>

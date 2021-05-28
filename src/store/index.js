@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import user from './user'
+import clock from './clock'
+import eventlog from './eventlog'
 
 Vue.use(Vuex)
 
@@ -14,16 +16,21 @@ Vue.use(Vuex)
  * with the Store instance.
  */
 
+const Store = new Vuex.Store({
+  modules: {
+    user,
+    clock,
+    eventlog
+  },
+  namespaced: true,
+
+  // enable strict mode (adds overhead!)
+  // for dev mode only
+  strict: process.env.DEBUGGING
+})
+
 export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      user
-    },
-
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEBUGGING
-  })
-
   return Store
 }
+
+export { Store }

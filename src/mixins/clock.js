@@ -8,8 +8,9 @@ export default {
   methods: {
     clock () {
       moment.locale('ko')
+      this.$store.commit('clock/updateTime', moment())
       setInterval(() => {
-        this.time = moment()
+        this.$store.commit('clock/updateTime', moment())
       }, 1000)
     }
   }

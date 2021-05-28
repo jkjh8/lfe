@@ -14,7 +14,9 @@
           <div>롯데 통합 방송 시스템</div>
         </q-toolbar-title>
 
-        <div><q-btn to="/login">Login</q-btn></div>
+        <Link />
+        <!-- <div><q-btn to="/login">Login</q-btn></div> -->
+        <UserStatus></UserStatus>
       </q-toolbar>
     </q-header>
 
@@ -25,8 +27,17 @@
 </template>
 
 <script>
+import clock from '../mixins/clock'
+import UserStatus from '../components/users/loginState'
+import Link from '../components/Link'
+
 export default {
   name: 'MainLayout',
+  mixins: [clock],
+  components: { UserStatus, Link },
+  created () {
+    this.clock()
+  },
   methods: {
     //
   }

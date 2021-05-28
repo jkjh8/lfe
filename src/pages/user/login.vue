@@ -6,7 +6,7 @@
     >
       <q-card style="min-width: 500px;">
         <q-card-section class="bg-teal-14">
-          <div class="text-h6 text-white">Login</div>
+          <div class="text-h6 text-white">로그인</div>
         </q-card-section>
 
         <q-separator />
@@ -16,7 +16,7 @@
               <q-input
                 outlined
                 v-model="userInfo.id"
-                label="Your E-Mail"
+                label="E-Mail"
                 lazy-rules
                 :rules="rules.email"
                 @keyup.enter="onSubmit"
@@ -26,7 +26,7 @@
               <q-input
                 outlined
                 v-model="userInfo.password"
-                label="Your password"
+                label="Password"
                 lazy-rules
                 :rules="rules.password"
                 :type="show ? 'text' : 'password'"
@@ -39,16 +39,17 @@
             </div>
           </div>
 
-          <div class="fit row justify-end">
-            <q-btn flat color="orange-10" to="/register">Register</q-btn>
+          <div class="fit row justify-between q-ml-sm">
+            <q-checkbox v-model="idSave" label="아이디 저장" color="teal-14" @input="saveIdCheckbox" />
+            <q-btn flat color="orange-10" to="/register">회원가입</q-btn>
           </div>
         </q-card-section>
 
         <q-separator />
 
         <q-card-actions align="right">
-          <q-btn label="Submit" type="submit" color="teal-14"/>
-          <q-btn label="Reset" type="reset" color="teal-14" flat class="q-ml-sm" />
+          <q-btn class="q-px-sm" label="로그인" type="submit" color="teal-14" />
+          <q-btn class="q-px-sm" label="초기화" type="reset" color="teal-14" flat />
         </q-card-actions>
       </q-card>
     </q-form>
@@ -63,6 +64,7 @@ export default {
   data () {
     return {
       show: false,
+      idSave: false,
       userInfo: {
         id: '',
         password: ''
@@ -73,12 +75,23 @@ export default {
       }
     }
   },
+  mounted () {
+    this.checkIdSave()
+  },
   methods: {
     onSubmit () {
       this.login(this.userInfo)
+      if (this.idSave) this.setUserId()
     },
     onReset () {
       this.userInfo = { id: '', password: '' }
+    },
+    saveIdCheckbox (value) {
+      if (value) {
+        this.setIdSave()
+      } else {
+        this.clearUserId()
+      }
     }
   }
 }
