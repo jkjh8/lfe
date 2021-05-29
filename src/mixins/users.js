@@ -24,7 +24,6 @@ export default {
           this.$router.push('/')
         }, 1500)
       }).catch((err) => {
-        console.log(err.response.data)
         this.$q.notify({
           type: 'negative',
           message: err.response.data.info.message,
@@ -32,11 +31,6 @@ export default {
           timeout: 1000
         })
       })
-    },
-    updateUserInfoToCookie (data) {
-      this.$cookie.set('accessToken', data.accessToken)
-      this.$cookie.set('refreshToken', data.refreshToken)
-      this.$store.commit('user/updateRefreshToken', data.refreshToken)
     },
     checkIdSave () {
       this.idSave = this.$cookie.get('idSave') === 'true'
@@ -56,16 +50,8 @@ export default {
       this.$cookie.set('userId', this.userInfo.email)
     },
     getUserInfo () {
-      const accessToken = this.$cookie.get('accessToken')
-      if (!accessToken) return this.getAccessToken()
-
-      this.$axios.get('/auth/get', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      }).then((res) => {
+      this.$axios.get('/auth/get').then((res) => {
         this.$store.commit('user/updateUser', res.data.user)
-        // this.$store.commit('user/updateRefreshToken', res.data.user.refreshToken)
       }).catch((err) => {
         console.log(err.response.data)
       })
@@ -75,9 +61,8 @@ export default {
     },
     logout () {
       this.$axios.get('/auth/logout').then((res) => {
-        console.log(res)
-        this.$cookie.delete('accessToken')
         this.$store.commit('user/updateUser', null)
+        this.$store.commit('eventlog/updateLog', [])
         this.$router.push('/')
         this.$q.notify({
           type: 'positive',

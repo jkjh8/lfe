@@ -8,7 +8,9 @@
       <q-card-section>
         <q-table
           :columns="columns"
-          :items="logs.items"
+          :data="logs.items"
+          hide-pagination
+          ref="table"
         ></q-table>
         <q-pagination
           v-model="current"
@@ -18,7 +20,7 @@
           size="sm"
           :loading="loading"
           :pagination="pagination"
-          :max="maxPage"
+          :max="pages.totalPage"
           :max-pages="10"
           direction-links
           boundary-links
@@ -26,6 +28,7 @@
           icon-last="skip_next"
           icon-prev="fast_rewind"
           icon-next="fast_forward"
+          @input="changePage"
         />
       </q-card-section>
     </q-card>
@@ -72,9 +75,20 @@ export default {
       query = query + `&limit=${this.pages.itemsPerPage}`
       query = query + `&search=${this.logs.search}`
       query = query + `&zones=${this.logs.zones}`
+      console.log(query)
       this.$axios.get(`/log/get?${query}`).then((res) => {
-        console.log(res)
+        console.log(res.data)
+        this.$store.commit('eventlog/updateLog', res.data.docs)
+        this.$store.commit('eventlog/updatelimit', res.data.limit)
+        this.$store.commit('eventlog/updateTotalPage', res.data.totalPages)
+        this.$refs.table.setPagination({ rowsPerPage: res.data.limit })
+        console.log(this.logs)
       })
+    },
+    async changePage (page) {
+      console.log(page)
+      await this.$store.commit('eventlog/updatePage', page)
+      this.getlog()
     }
   }
 }

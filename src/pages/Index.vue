@@ -25,9 +25,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import userFn from '../mixins/users'
 
 export default {
   name: 'PageIndex',
+  mixins: [userFn],
   computed: {
     ...mapGetters({
       days: 'clock/days',
@@ -35,6 +37,10 @@ export default {
       times: 'clock/times',
       ampm: 'clock/ampm'
     })
+  },
+  mounted () {
+    console.log('main page')
+    this.getUserInfo()
   }
 }
 </script>

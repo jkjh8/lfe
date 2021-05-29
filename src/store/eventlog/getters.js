@@ -1,4 +1,3 @@
-/*
-export function someGetter (state) {
+export function getLog (state) {
+  return state.logs.items
 }
-*/

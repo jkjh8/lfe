@@ -2,7 +2,7 @@ import { Store } from '../store'
 import axios from 'axios'
 axios.defaults.baseURL = `http://${window.location.hostname}:3000`
 
-async function getUser () {
+async function getUser (to, from, next) {
   const r = await Store.getters['user/user']
   if (!r) {
     axios.get('/auth/get').then((res) => {
@@ -40,7 +40,7 @@ const routes = [
       { path: '', component: () => import('pages/LogView.vue') }
     ],
     beforeEnter: async (to, from, next) => {
-      getUser()
+      getUser(to, from, next)
       next()
     }
   },
