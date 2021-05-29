@@ -33,21 +33,21 @@ export default {
       })
     },
     checkIdSave () {
-      this.idSave = this.$cookie.get('idSave') === 'true'
+      this.idSave = localStorage.getItem('idSave') === 'true'
       if (this.idSave) {
-        this.userInfo.email = this.$cookie.get('userId')
+        this.userInfo.email = localStorage.getItem('userId')
       }
     },
     setIdSave () {
-      this.$cookie.set('idSave', this.idSave)
+      localStorage.setItem('idSave', this.idSave)
       this.setUserId()
     },
     clearUserId () {
-      this.$cookie.set('idSave', this.idSave)
-      this.$cookie.delete('userId')
+      localStorage.setItem('idSave', this.idSave)
+      localStorage.removeItem('userId')
     },
     setUserId () {
-      this.$cookie.set('userId', this.userInfo.email)
+      localStorage.setItem('userId', this.userInfo.email)
     },
     getUserInfo () {
       this.$axios.get('/auth/get').then((res) => {

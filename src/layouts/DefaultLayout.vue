@@ -28,18 +28,25 @@
 
 <script>
 import clock from '../mixins/clock'
+import user from '../mixins/users'
 import UserStatus from '../components/users/loginState'
 import Link from '../components/Link'
 
 export default {
   name: 'MainLayout',
-  mixins: [clock],
+  mixins: [clock, user],
   components: { UserStatus, Link },
   created () {
     this.clock()
   },
+  mounted () {
+    this.getUserInfo()
+  },
   methods: {
     //
+  },
+  beforeDestroy () {
+    this.logout()
   }
 }
 </script>

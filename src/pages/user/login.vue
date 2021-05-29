@@ -6,7 +6,10 @@
     >
       <q-card style="min-width: 500px;">
         <q-card-section class="bg-teal-14">
-          <div class="text-h6 text-white">로그인</div>
+          <div class="text-h6 text-white text-weight-bold">
+            <q-icon name='account_circle' size="md" />
+            로그인
+          </div>
         </q-card-section>
 
         <q-separator />
@@ -40,7 +43,21 @@
           </div>
 
           <div class="fit row justify-between q-ml-sm">
-            <q-checkbox v-model="idSave" label="아이디 저장" color="teal-14" @input="saveIdCheckbox" />
+            <div class="column q-ml-sm">
+              <q-checkbox
+                v-model="idSave"
+                dense
+                label="아이디 저장"
+                color="teal-14"
+                @input="saveIdCheckbox"
+              />
+              <q-checkbox
+                v-model="userInfo.keepLoggedIn"
+                class="q-mt-sm"
+                dense label="로그인 유지"
+                color="orange-14"
+              />
+            </div>
             <q-btn flat color="orange-10" to="/register">회원가입</q-btn>
           </div>
         </q-card-section>
@@ -67,7 +84,8 @@ export default {
       idSave: false,
       userInfo: {
         email: '',
-        password: ''
+        password: '',
+        keepLoggedIn: false
       },
       rules: {
         email: [value => !!value || 'E-main is required', v => /.+@.+\..+/.test(v) || 'Not in E-mail format'],
@@ -84,7 +102,7 @@ export default {
       if (this.idSave) this.setUserId()
     },
     onReset () {
-      this.userInfo = { email: '', password: '' }
+      this.userInfo = { email: '', password: '', keepLoggedIn: false }
     },
     saveIdCheckbox (value) {
       if (value) {

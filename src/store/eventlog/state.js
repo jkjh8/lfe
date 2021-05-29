@@ -2,9 +2,11 @@ export default function () {
   return {
     pages: {
       page: 1,
-      limit: 0,
-      totalPage: 1,
-      itemsPerPage: 10
+      limit: 10,
+      totalPages: 1,
+      itemsPerPage: 10,
+      pagingCounter: 1,
+      totalDocs: 409
     },
     logs: {
       items: [],

@@ -1,17 +1,64 @@
 <template>
   <q-page>
-    <q-card class="q-mx-sm">
-      <q-card-section>
-        <div>이벤트 로그</div>
+    <q-card class="q-mx-sm" flat>
+      <q-card-section class="q-py-xs">
+        <div class="fit row">
+          <div>
+            <div class="row flex flex-center">
+              <div
+                class="text-h6 text-weight-bold"
+              >
+                이벤트 로그
+              </div>
+              <q-btn flat>
+                <q-icon name="settings" />
+              </q-btn>
+            </div>
+            <div
+              class="text-caption"
+            >
+              총 {{ pages.totalDocs }}개의 이벤트 로그
+            </div>
+          </div>
+          <q-space />
+          <div class="self-center">
+            <div class="row">
+              <q-input
+                v-model="search"
+                outlined
+                dense
+                clearable
+                color="teal-14"
+                hide-bottom-space
+              ></q-input>
+              <q-btn
+                class="q-ml-xs"
+                unelevated
+                color="teal-14"
+              >
+                검색
+              </q-btn>
+            </div>
+          </div>
+        </div>
       </q-card-section>
       <q-separator />
       <q-card-section>
         <q-table
           :columns="columns"
           :data="logs.items"
+          :loading="loading"
           hide-pagination
           ref="table"
-        ></q-table>
+        >
+          <template v-slot:body-cell-date="props">
+            <q-td :props="props">
+              <div>
+                {{ timeFormat(props.value) }}
+              </div>
+            </q-td>
+          </template>
+        </q-table>
         <q-pagination
           v-model="current"
           class="flex flex-center q-mt-md"
@@ -20,7 +67,7 @@
           size="sm"
           :loading="loading"
           :pagination="pagination"
-          :max="pages.totalPage"
+          :max="pages.totalPages"
           :max-pages="10"
           direction-links
           boundary-links
@@ -36,6 +83,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { mapState } from 'vuex'
 
 export default {
@@ -55,6 +103,7 @@ export default {
         { name: 'Zones', align: 'center', label: 'zones', field: 'zones', sortable: true },
         { name: 'Message', align: 'center', label: 'Message', field: 'message', sortable: true }
       ],
+      search: '',
       current: 1,
       maxPage: 100,
       loading: false,
@@ -71,24 +120,31 @@ export default {
   },
   methods: {
     getlog () {
+      this.loading = true
       let query = `page=${this.pages.page}`
-      query = query + `&limit=${this.pages.itemsPerPage}`
+      query = query + `&limit=${this.pages.limit}`
       query = query + `&search=${this.logs.search}`
       query = query + `&zones=${this.logs.zones}`
-      console.log(query)
+
       this.$axios.get(`/log/get?${query}`).then((res) => {
         console.log(res.data)
-        this.$store.commit('eventlog/updateLog', res.data.docs)
-        this.$store.commit('eventlog/updatelimit', res.data.limit)
-        this.$store.commit('eventlog/updateTotalPage', res.data.totalPages)
+        this.$store.commit('eventlog/updateDocs', res.data)
+        // this.$store.commit('eventlog/updatelimit', res.data.limit)
+        // this.$store.commit('eventlog/updateTotalPage', res.data.totalPages)
         this.$refs.table.setPagination({ rowsPerPage: res.data.limit })
-        console.log(this.logs)
+        this.loading = false
+      }).catch((error) => {
+        console.log(error)
+        this.loading = false
       })
     },
     async changePage (page) {
       console.log(page)
       await this.$store.commit('eventlog/updatePage', page)
       this.getlog()
+    },
+    timeFormat (time) {
+      return moment(time).format('YY-MM-DD hh:mm:ss a')
     }
   }
 }

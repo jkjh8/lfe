@@ -40,7 +40,7 @@ export default {
   },
   mounted () {
     console.log('main page')
-    this.getUserInfo()
+    // this.getUserInfo()
   }
 }
 </script>
