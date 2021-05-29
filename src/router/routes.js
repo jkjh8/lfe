@@ -1,4 +1,16 @@
 import { Store } from '../store'
+import axios from 'axios'
+axios.defaults.baseURL = `http://${window.location.hostname}:3000`
+
+async function getUser () {
+  const r = await Store.getters['user/user']
+  if (!r) {
+    axios.get('/auth/get').then((res) => {
+      Store.commit('user/updateUser', res.data.user)
+    })
+  }
+}
+
 const routes = [
   {
     path: '/',
@@ -28,8 +40,7 @@ const routes = [
       { path: '', component: () => import('pages/LogView.vue') }
     ],
     beforeEnter: async (to, from, next) => {
-      const r = await Store.getters['user/user']
-      console.log('before Enter', r)
+      getUser()
       next()
     }
   },

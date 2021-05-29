@@ -4,7 +4,7 @@ export default {
       idSave: false,
       header: {},
       userInfo: {
-        id: '',
+        email: '',
         password: ''
       }
     }
@@ -41,7 +41,7 @@ export default {
     checkIdSave () {
       this.idSave = this.$cookie.get('idSave') === 'true'
       if (this.idSave) {
-        this.userInfo.id = this.$cookie.get('userId')
+        this.userInfo.email = this.$cookie.get('userId')
       }
     },
     setIdSave () {
@@ -53,7 +53,7 @@ export default {
       this.$cookie.delete('userId')
     },
     setUserId () {
-      this.$cookie.set('userId', this.userInfo.id)
+      this.$cookie.set('userId', this.userInfo.email)
     },
     getUserInfo () {
       const accessToken = this.$cookie.get('accessToken')

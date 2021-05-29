@@ -25,7 +25,6 @@ axios.interceptors.response.use((response) => {
     return Promise.reject(error)
   }
   if (error.response.status === 401 && !originalRequest._retry) {
-    console.log('start refresh')
     originalRequest._retry = true
     const refreshToken = cookie.get('refreshToken')
     console.log(refreshToken)
@@ -43,8 +42,9 @@ axios.interceptors.response.use((response) => {
           cookie.set('refreshToken', res.data.refreshToken)
         }
         if (res.data.accessToken) {
-          cookie.set('accessToken', res.data.accessToken)
-          axios.defaults.headers.common.Authorization = 'Bearer ' + res.data.accessToken
+          const accessToken = res.data.accessToken
+          axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+          cookie.set('accessToken', accessToken)
         }
         return axios(originalRequest)
       }
