@@ -4,6 +4,8 @@ import cookie from 'vue-cookie'
 import { Store } from '../store'
 
 axios.defaults.baseURL = `http://${window.location.hostname}:3000`
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+axios.defaults.withCredentials = true
 
 axios.interceptors.request.use(config => {
   const accessToken = cookie.get('accessToken')

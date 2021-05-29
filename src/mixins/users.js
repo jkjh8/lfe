@@ -12,7 +12,7 @@ export default {
   methods: {
     login (userInfo) {
       this.$axios.post('/auth/local', userInfo).then(async (res) => {
-        await this.updateUserInfoToCookie(res.data)
+        // await this.updateUserInfoToCookie(res.data)
         this.getUserInfo()
         this.$q.notify({
           type: 'positive',
