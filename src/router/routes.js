@@ -34,10 +34,10 @@ const routes = [
     ]
   },
   {
-    path: '/login/naverCallback',
+    path: '/login/callback/naver',
     component: () => import('layouts/DefaultLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/user/login/naverCallback.vue') }
+      { path: '', component: () => import('src/pages/user/login/callback/naver.vue') }
     ]
   },
   {
@@ -52,6 +52,13 @@ const routes = [
     component: () => import('layouts/DefaultLayout.vue'),
     children: [
       { path: '', component: () => import('src/pages/user/register/local.vue') }
+    ]
+  },
+  {
+    path: '/register/callback/naver',
+    component: () => import('layouts/DefaultLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/user/register/callback/naver.vue') }
     ]
   },
   {

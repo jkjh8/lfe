@@ -1,24 +1,32 @@
 export default {
   data () {
     return {
-      naverLogin: null
+      naverLogin: null,
+      src: 'https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js',
+      loginCb: 'http://localhost:8080/login/callback/naver',
+      registerCb: 'http://localhost:8080/register/callback/naver'
     }
   },
   mounted () {
-    if (!window.naver) { this.initNaver() }
+    //
   },
   methods: {
-    initNaver () {
+    loginFromNaver (mode) {
+      let url
+      if (mode === 'login') {
+        url = this.loginCb
+      } else {
+        url = this.registerCb
+      }
       const script = document.createElement('script')
-      script.onload = () => this.loadNaver()
-      script.src = 'https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js'
+      script.onload = () => this.initLoginFromNaver(url)
+      script.src = this.src
       document.head.appendChild(script)
     },
-    loadNaver () {
-      console.log(window.naver)
+    initLoginFromNaver (url) {
       this.naverLogin = new window.naver.LoginWithNaverId({
         clientId: process.env.NAVER_ID,
-        callbackUrl: 'http://localhost:8080/login/naverCallback',
+        callbackUrl: url,
         callbackHandle: true,
         isPopup: true
       })
@@ -26,6 +34,12 @@ export default {
     },
     async loginNaver () {
       this.naverLogin.reprompt()
+    },
+    async naverLoingCb () {
+      await this.loginFromNaver('login')
+      this.naverLogin.getLoginStatus(res => {
+        console.log(res, this.naverLogin.user)
+      })
     }
   }
 }

@@ -80,7 +80,7 @@ export default {
     }
   },
   mounted () {
-    //
+    if (!window.naver) { this.loginFromNaver('login') }
   },
   methods: {
     //
