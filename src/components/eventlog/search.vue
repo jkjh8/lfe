@@ -1,6 +1,6 @@
 <template>
-  <div class="row search">
-    <div class="row">
+  <div class="row search justify-end">
+    <div class="row q-mr-md">
       <q-input
         v-model="search"
         outlined

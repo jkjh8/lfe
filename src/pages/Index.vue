@@ -39,7 +39,7 @@ export default {
     })
   },
   mounted () {
-    console.log('main page')
+    // console.log('main page')
     // this.getUserInfo()
   }
 }
