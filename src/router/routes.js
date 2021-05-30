@@ -23,14 +23,35 @@ const routes = [
     path: '/login',
     component: () => import('layouts/DefaultLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/user/login.vue') }
+      { path: '', component: () => import('src/pages/user/login/index.vue') }
+    ]
+  },
+  {
+    path: '/login/local',
+    component: () => import('layouts/DefaultLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/user/login/local.vue') }
+    ]
+  },
+  {
+    path: '/login/naverCallback',
+    component: () => import('layouts/DefaultLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/user/login/naverCallback.vue') }
     ]
   },
   {
     path: '/register',
     component: () => import('layouts/DefaultLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/user/register.vue') }
+      { path: '', component: () => import('src/pages/user/register/index.vue') }
+    ]
+  },
+  {
+    path: '/register/local',
+    component: () => import('layouts/DefaultLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/user/register/local.vue') }
     ]
   },
   {

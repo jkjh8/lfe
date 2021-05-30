@@ -5,11 +5,15 @@
       @reset="onReset"
     >
       <q-card style="min-width: 500px;">
-        <q-card-section class="bg-teal-14">
+        <q-card-section class="row bg-teal-14 q-py-sm items-center">
           <div class="text-h6 text-white text-weight-bold">
             <q-icon name='account_circle' size="md" />
             로그인
           </div>
+          <q-space/>
+          <q-btn round flat @click="$router.go(-1)">
+            <q-icon color="white" name="navigate_before" />
+          </q-btn>
         </q-card-section>
 
         <q-separator />
@@ -74,7 +78,7 @@
 </template>
 
 <script>
-import users from '../../mixins/users'
+import users from '../../../mixins/users'
 
 export default {
   mixins: [users],
