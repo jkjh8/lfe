@@ -11,7 +11,8 @@ export default function () {
     logs: {
       items: [],
       zones: [],
-      search: ''
+      search: '',
+      loading: false
     }
   }
 }

@@ -32,7 +32,14 @@
           >
             {{ nickName }}
           </q-avatar>
-          <div class="q-my-md">{{ user.email }}</div>
+          <div class="q-my-md text-grey">{{ user.email }}</div>
+
+          <q-btn class="q-my-sm q-px-md" flat rounded>
+            <div class="text-subtitle2 text-weight-bold">
+              내 프로필
+            </div>
+          </q-btn>
+
           <q-btn
             class="q-px-md text-weight-bold"
             rounded

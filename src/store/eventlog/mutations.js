@@ -15,8 +15,8 @@ export function updatelimit (state, payload) {
   state.pages.limit = payload
 }
 
-export function updateItemsPerPage (state, payload) {
-  state.pages.itemsPerPage = payload
+export function loading (state, payload) {
+  state.pages.loading = payload
 }
 
 export function updateLog (state, payload) {
