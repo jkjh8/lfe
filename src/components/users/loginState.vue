@@ -51,7 +51,12 @@
           </q-avatar>
           <div class="q-my-md text-grey">{{ user.email }}</div>
 
-          <q-btn class="q-my-sm q-px-md" flat rounded>
+          <q-btn
+            class="q-my-sm q-px-md"
+            flat
+            rounded
+            @click="$router.push('/user/profile')"
+          >
             <div class="text-subtitle2 text-weight-bold">
               내 프로필
             </div>

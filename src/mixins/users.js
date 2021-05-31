@@ -100,6 +100,9 @@ export default {
           timeout: 1000
         })
       })
+    },
+    deleteUser (user) {
+      console.log(user)
     }
   }
 }

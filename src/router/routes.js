@@ -20,52 +20,21 @@ const routes = [
     ]
   },
   {
-    path: '/login',
-    component: () => import('layouts/DefaultLayout.vue'),
-    children: [
-      { path: '', component: () => import('src/pages/user/login/index.vue') }
-    ]
-  },
-  {
-    path: '/login/local',
-    component: () => import('layouts/DefaultLayout.vue'),
-    children: [
-      { path: '', component: () => import('src/pages/user/login/local.vue') }
-    ]
-  },
-  {
-    path: '/login/callback/naver',
-    component: () => import('layouts/DefaultLayout.vue'),
-    children: [
-      { path: '', component: () => import('src/pages/user/login/callback/naver.vue') }
-    ]
-  },
-  {
-    path: '/register',
-    component: () => import('layouts/DefaultLayout.vue'),
-    children: [
-      { path: '', component: () => import('src/pages/user/register/index.vue') }
-    ]
-  },
-  {
-    path: '/register/local',
-    component: () => import('layouts/DefaultLayout.vue'),
-    children: [
-      { path: '', component: () => import('src/pages/user/register/local.vue') }
-    ]
-  },
-  {
-    path: '/register/callback/naver',
-    component: () => import('layouts/DefaultLayout.vue'),
-    children: [
-      { path: '', component: () => import('src/pages/user/register/callback/naver.vue') }
-    ]
-  },
-  {
     path: '/logs',
     component: () => import('layouts/DefaultLayout.vue'),
     children: [
       { path: '', component: () => import('pages/LogView.vue') }
+    ],
+    beforeEnter: async (to, from, next) => {
+      getUser(to, from, next)
+      next()
+    }
+  },
+  {
+    path: '/user/profile',
+    component: () => import('layouts/DefaultLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/user/profile.vue') }
     ],
     beforeEnter: async (to, from, next) => {
       getUser(to, from, next)

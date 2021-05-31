@@ -16,7 +16,7 @@
 
         <Link />
         <!-- <div><q-btn to="/login">Login</q-btn></div> -->
-        <UserStatus></UserStatus>
+        <UserStatus class="q-mr-md"></UserStatus>
       </q-toolbar>
     </q-header>
 
