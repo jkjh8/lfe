@@ -37,10 +37,10 @@ export default {
                     createAt: Date.now(),
                     updateAt: Date.now()
                   }
-                  if (mode === 'login') {
+                  if (mode) {
                     this.login('kakao', userInfo)
                   } else {
-                    this.register('kakao', userInfo)
+                    this.register(userInfo)
                   }
                 } else {
                   this.$q.notify({
