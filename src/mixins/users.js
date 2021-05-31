@@ -3,6 +3,7 @@ export default {
     return {
       idSave: false,
       header: {},
+      loginUrl: '/auth/local',
       userInfo: {
         email: '',
         password: ''
@@ -10,13 +11,18 @@ export default {
     }
   },
   methods: {
-    login (userInfo) {
-      this.$axios.post('/auth/local', userInfo).then(async (res) => {
+    login (mode, userInfo) {
+      if (mode === 'local') {
+        this.loginUrl = '/auth/local'
+      } else {
+        this.loginUrl = '/auth/oauth'
+      }
+      this.$axios.post(this.loginUrl, userInfo).then(async (res) => {
         // await this.updateUserInfoToCookie(res.data)
         this.getUserInfo()
         this.$q.notify({
           type: 'positive',
-          message: '로그인이 성공하였습니다.',
+          message: '로그인 성공하였습니다.',
           position: 'center',
           timeout: 1000
         })
@@ -30,6 +36,29 @@ export default {
           position: 'center',
           timeout: 1000
         })
+        this.$router.push('/login')
+      })
+    },
+    register (userInfo) {
+      this.$axios.post('/auth/local/register', userInfo).then((res) => {
+        console.log(res)
+        this.$q.notify({
+          type: 'positive',
+          message: '회원가입에 성공하였습니다. 로그인 페이지로 이동합니다.',
+          position: 'center',
+          timeout: 1000
+        })
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 1000)
+      }).catch((err) => {
+        this.$q.notify({
+          type: 'negative',
+          message: err.response.data.message,
+          position: 'center',
+          timeout: 1000
+        })
+        this.$router.push('/register')
       })
     },
     checkIdSave () {

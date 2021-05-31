@@ -12,34 +12,22 @@ export default {
   },
   methods: {
     loginFromNaver (mode) {
-      let url
-      if (mode === 'login') {
-        url = this.loginCb
-      } else {
-        url = this.registerCb
-      }
       const script = document.createElement('script')
-      script.onload = () => this.initLoginFromNaver(url)
+      script.onload = () => this.initLoginFromNaver(mode)
       script.src = this.src
       document.head.appendChild(script)
     },
     initLoginFromNaver (url) {
       this.naverLogin = new window.naver.LoginWithNaverId({
         clientId: process.env.NAVER_ID,
-        callbackUrl: url,
+        callbackUrl: url ? this.loginCb : this.registerCb,
         callbackHandle: true,
         isPopup: true
       })
       this.naverLogin.init()
     },
-    async loginNaver () {
+    loginNaver () {
       this.naverLogin.reprompt()
-    },
-    async naverLoingCb () {
-      await this.loginFromNaver('login')
-      this.naverLogin.getLoginStatus(res => {
-        console.log(res, this.naverLogin.user)
-      })
     }
   }
 }

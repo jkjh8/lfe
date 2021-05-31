@@ -14,6 +14,14 @@
       flat
     >
       <q-avatar
+        v-if="user && user.profile_image"
+        color="teal-14"
+        text-color="white"
+      >
+        <img :src="user.profile_image" />
+      </q-avatar>
+      <q-avatar
+        v-else
         color="teal-14"
         text-color="white"
       >
@@ -26,6 +34,15 @@
           style="width: 200px"
         >
           <q-avatar
+            v-if="user && user.profile_image"
+            color="teal-14"
+            text-color="white"
+            size="73px"
+          >
+            <img :src="user.profile_image" />
+          </q-avatar>
+          <q-avatar
+            v-else
             color="teal-14"
             text-color="white"
             size="73px"
@@ -67,6 +84,9 @@ export default {
     ...mapGetters({
       nickName: 'user/nickname'
     })
+  },
+  mounted () {
+    console.log(this.user)
   }
 }
 </script>

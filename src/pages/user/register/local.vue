@@ -77,7 +77,9 @@
 </template>
 
 <script>
+import userApi from '../../../mixins/users'
 export default {
+  mixins: [userApi],
   data () {
     return {
       show: false,
@@ -98,24 +100,13 @@ export default {
   },
   methods: {
     onSubmit () {
-      this.$axios.post('/auth/local/register', this.userInfo).then((res) => {
-        this.$q.notify({
-          type: 'positive',
-          message: '회원가입에 성공하였습니다. 로그인 페이지로 이동합니다.',
-          position: 'center',
-          timeout: 1000
-        })
-        setTimeout(() => {
-          this.$router.push('/login')
-        }, 1000)
-      }).catch((err) => {
-        this.$q.notify({
-          type: 'negative',
-          message: err.response.data.message,
-          position: 'center',
-          timeout: 1000
-        })
-      })
+      const info = this.userInfo
+      info.id = this.userInfo.email
+      info.provider = 'local'
+      info.createAt = Date.now()
+      info.updateAt = Date.now()
+
+      this.register(info)
     },
     onReset () {
       this.userInfo = {

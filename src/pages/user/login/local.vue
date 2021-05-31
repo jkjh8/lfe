@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     onSubmit () {
-      this.login(this.userInfo)
+      this.login('local', this.userInfo)
       if (this.idSave) this.setUserId()
     },
     onReset () {
