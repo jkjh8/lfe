@@ -4,9 +4,13 @@ axios.defaults.baseURL = `http://${window.location.hostname}:3000`
 
 async function getUser (to, from, next) {
   const r = await Store.getters['user/user']
-  if (!r) {
+  if (r) {
+    next()
+  } else {
     axios.get('/auth/get').then((res) => {
       Store.commit('user/updateUser', res.data.user)
+    }).catch(() => {
+      next(from.fullPath)
     })
   }
 }

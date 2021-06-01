@@ -6,6 +6,7 @@ axios.defaults.withCredentials = true
 
 export function getLog ({ state, commit }) {
   commit('loading', true)
+  console.log(state.logs)
   let query = `page=${state.pages.page}`
   query = query + `&limit=${state.pages.limit}`
   query = query + `&search=${state.logs.search}`

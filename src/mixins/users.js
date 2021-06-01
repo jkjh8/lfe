@@ -102,7 +102,26 @@ export default {
       })
     },
     deleteUser (user) {
-      console.log(user)
+      this.$axios.post('/auth/del', user).then(res => {
+        if (res.data.success) {
+          this.$store.commit('user/updateUser', null)
+          this.$store.commit('eventlog/updateLog', [])
+          this.$q.notify({
+            type: 'positive',
+            message: '회원 탈퇴하였습니다. 홈페이지로 이동합니다.',
+            position: 'center',
+            timeout: 1000
+          })
+        }
+        this.$router.push('/')
+      }).catch((err) => {
+        this.$q.notify({
+          type: 'negative',
+          message: err.response.data.message,
+          position: 'center',
+          timeout: 1000
+        })
+      })
     }
   }
 }

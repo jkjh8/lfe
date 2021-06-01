@@ -26,3 +26,7 @@ export function updateLog (state, payload) {
 export function updateZone (state, payload) {
   state.logs.zones = payload
 }
+
+export function updateSearch (state, payload) {
+  state.logs.search = payload
+}

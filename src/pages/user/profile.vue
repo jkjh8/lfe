@@ -11,7 +11,7 @@
       <q-card-section v-if="user">
         <div class="flex flex-center column" style="position: relative">
           <div v-if="user && user.profile_image">
-            <q-avatar>
+            <q-avatar size="100px">
               <img :src="user.profile_image" />
             </q-avatar>
           </div>
@@ -112,7 +112,7 @@
 
           <q-item
             clickable
-            @click="deleteUser(user)"
+            @click="confirmDel(user)"
           >
             <q-item-section>
               <q-item-label class="text-red">회원 탈퇴 및 서비스 해지</q-item-label>
@@ -145,6 +145,20 @@ export default {
   methods: {
     dateFormat (date) {
       return moment(date).format('YYYY-MM-DD hh-mm-ss a')
+    },
+    confirmDel (user) {
+      this.$q.dialog({
+        title: '확인',
+        message: '정말 삭제하시겠습니까?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.deleteUser(user)
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
     }
   }
 }
