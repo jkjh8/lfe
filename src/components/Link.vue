@@ -8,6 +8,15 @@
       active-color="teal"
     >
       <q-route-tab
+        class="qtb"
+        to="/zones"
+        tag="li"
+        exact
+      >
+        지역 설정
+      </q-route-tab>
+      <q-route-tab
+        class="qtb"
         to="/logs"
         tag="li"
         exact
@@ -29,6 +38,9 @@ export default {
 </script>
 
 <style scoped>
+  .qtb {
+    max-width: 120px;
+  }
   .active {
     color: teal;
   }

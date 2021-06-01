@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import user from './user'
 import clock from './clock'
 import eventlog from './eventlog'
+import zones from './zones'
 
 Vue.use(Vuex)
 
@@ -20,7 +21,8 @@ const Store = new Vuex.Store({
   modules: {
     user,
     clock,
-    eventlog
+    eventlog,
+    zones
   },
   namespaced: true,
 

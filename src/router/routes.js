@@ -24,6 +24,16 @@ const routes = [
     ]
   },
   {
+    path: '/zones',
+    component: () => import('layouts/DefaultLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Zones.vue') }
+    ],
+    beforeEnter: async (to, from, next) => {
+      getUser(to, from, next)
+    }
+  },
+  {
     path: '/logs',
     component: () => import('layouts/DefaultLayout.vue'),
     children: [
@@ -31,7 +41,6 @@ const routes = [
     ],
     beforeEnter: async (to, from, next) => {
       getUser(to, from, next)
-      next()
     }
   },
   {
@@ -42,7 +51,6 @@ const routes = [
     ],
     beforeEnter: async (to, from, next) => {
       getUser(to, from, next)
-      next()
     }
   },
   // Always leave this as last one,
