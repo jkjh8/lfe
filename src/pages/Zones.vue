@@ -136,11 +136,11 @@
                       <q-list>
                         <q-item
                           v-for="zone in zones"
-                          :key="zone.idx"
+                          :key="zone.id"
                         >
                           <q-item-section avatar>
                             <q-avatar color="light-blue-6" text-color="white" size="30px">
-                              {{ zone.idx + 1 }}
+                              {{ zone.id + 1 }}
                             </q-avatar>
                           </q-item-section>
                           <q-item-section>
@@ -157,11 +157,11 @@
                       <q-list>
                         <q-item
                           v-for="relay in relays"
-                          :key="relay.idx"
+                          :key="relay.id"
                         >
                           <q-item-section avatar>
                             <q-avatar color="light-green-6" text-color="white" size="30px">
-                              {{ relay.idx + 1 }}
+                              {{ relay.id + 1 }}
                             </q-avatar>
                           </q-item-section>
                           <q-item-section>
@@ -214,6 +214,9 @@ export default {
   },
   mounted () {
     this.get()
+    this.$socket.on('zones', (data) => {
+      console.log('socket.io ', data)
+    })
   },
   methods: {
     get () {
@@ -224,14 +227,14 @@ export default {
     },
     select (id) {
       this.$store.commit('zones/updateSelected', id)
-      this.$store.commit('zones/updateZones', this.locals[id - 1].children)
-      this.$store.commit('zones/updateRelays', this.locals[id - 1].relay)
+      this.$store.commit('zones/updateZones', this.locals[id - 1].zones)
+      this.$store.commit('zones/updateRelays', this.locals[id - 1].relays)
     },
     edit (mode, id, value) {
       console.log(mode, id, value)
       this.$q.dialog({
         title: '수정',
-        message: `${this.locals[id - 1].name} ${mode} ${value.idx}`,
+        message: `${this.locals[id - 1].name} ${mode} ${value.id}`,
         prompt: {
           model: value.name,
           type: 'text' // optional
