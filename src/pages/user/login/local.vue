@@ -22,7 +22,7 @@
             <div>
               <q-input
                 outlined
-                v-model="userInfo.email"
+                v-model="userInfo.id"
                 label="E-Mail"
                 lazy-rules
                 :rules="rules.email"
@@ -87,7 +87,7 @@ export default {
       show: false,
       idSave: false,
       userInfo: {
-        email: '',
+        id: '',
         password: '',
         keepLoggedIn: false
       },
@@ -106,7 +106,7 @@ export default {
       if (this.idSave) this.setUserId()
     },
     onReset () {
-      this.userInfo = { email: '', password: '', keepLoggedIn: false }
+      this.userInfo = { id: '', password: '', keepLoggedIn: false }
     },
     saveIdCheckbox (value) {
       if (value) {

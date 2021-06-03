@@ -48,10 +48,10 @@ export default {
                 createAt: Date.now(),
                 updateAt: Date.now()
               }
-              console.log(res)
+              console.log(userInfo)
               console.log(mode)
               if (mode) {
-                this.login('kakao', userInfo)
+                this.login('facebook', userInfo)
               } else {
                 this.register(userInfo)
               }

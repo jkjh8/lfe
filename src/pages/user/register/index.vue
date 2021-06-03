@@ -59,7 +59,7 @@
         </div>
       </q-btn>
 
-<!-- 네이버 회원가입 -->
+<!-- 페이스북 회원가입 -->
       <q-btn
         class="facebook q-my-sm"
         rounded

@@ -52,6 +52,7 @@ export default {
           this.$router.push('/login')
         }, 1000)
       }).catch((err) => {
+        console.log(err)
         this.$q.notify({
           type: 'negative',
           message: err.response.data.message,
