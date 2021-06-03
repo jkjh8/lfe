@@ -49,47 +49,7 @@
           :separator-style="{ backgroundColor: '#FFFFFF' }"
         >
           <template v-slot:before>
-            <q-card class="q-ma-sm">
-              <!-- 제목 라인 -->
-              <q-card-section class="q-py-sm">
-                <div class="row items-center">
-                  <div class="text-subtitle1">지점</div>
-                  <q-space />
-                  <div>
-                    <q-btn round flat size="md" class="q-pa-none">
-                      <q-icon name="add_circle_outline" />
-                    </q-btn>
-                  </div>
-                </div>
-              </q-card-section>
-              <q-separator />
-              <!-- 리스트 시작 -->
-              <q-card-section class="q-pa-none">
-                <q-scroll-area ref="scrollArea" style="height: 600px;">
-                  <q-list>
-                    <q-item
-                      v-for="local in locals"
-                      :key="local.id"
-                      clickable
-                      v-ripple
-                      :active="local.id === selected"
-                      @click="select(local.id)"
-                      active-class="zone-active-link"
-                    >
-                      <q-item-section avatar>
-                        <q-avatar color="teal-14" text-color="white" size="30px">
-                          {{ local.id }}
-                        </q-avatar>
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>{{ local.name }}</q-item-label>
-                        <q-item-label caption>{{ local.code }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-scroll-area>
-              </q-card-section>
-            </q-card>
+            <Locals />
           </template>
 
           <!-- 구분자 -->
@@ -98,88 +58,7 @@
           </template>
 
           <template v-slot:after>
-            <q-card class="q-ma-sm">
-              <q-card-section class="q-mt-sm q-pb-none q-pt-sm">
-                <q-tabs
-                  v-model="tab"
-                  dense
-                  class="text-blue-grey-4"
-                  active-color="grey-10"
-                  indicator-color="teal-14"
-                  align="justify"
-                >
-                  <q-tab class="row" name="zone">
-                    <div class="row items-center">
-                      <div>방송구간</div>
-                      <q-btn flat round>
-                        <q-icon name="add_circle_outline" />
-                      </q-btn>
-                    </div>
-                  </q-tab>
-                  <q-tab name="relay">
-                    <div class="row items-center">
-                      <div>릴레이</div>
-                      <q-btn flat round>
-                        <q-icon name="add_circle_outline" />
-                      </q-btn>
-                    </div>
-                  </q-tab>
-                </q-tabs>
-              </q-card-section>
-
-              <q-separator />
-
-              <q-card-section class="q-py-none">
-                <q-tab-panels v-model="tab" animated>
-                  <q-tab-panel name="zone" class="q-pa-none">
-                    <q-scroll-area ref="scrollArea" style="height: 600px;">
-                      <q-list>
-                        <q-item
-                          v-for="zone in zones"
-                          :key="zone.id"
-                        >
-                          <q-item-section avatar>
-                            <q-avatar color="light-blue-6" text-color="white" size="30px">
-                              {{ zone.id + 1 }}
-                            </q-avatar>
-                          </q-item-section>
-                          <q-item-section>
-                            <q-item-label>{{ zone.name }}</q-item-label>
-                            <q-item-label caption>{{ zone.code }}</q-item-label>
-                          </q-item-section>
-                        </q-item>
-                      </q-list>
-                    </q-scroll-area>
-                  </q-tab-panel>
-
-                  <q-tab-panel name="relay" class="q-pa-none">
-                    <q-scroll-area ref="scrollArea" style="height: 600px;">
-                      <q-list>
-                        <q-item
-                          v-for="relay in relays"
-                          :key="relay.id"
-                        >
-                          <q-item-section avatar>
-                            <q-avatar color="light-green-6" text-color="white" size="30px">
-                              {{ relay.id + 1 }}
-                            </q-avatar>
-                          </q-item-section>
-                          <q-item-section>
-                            <q-item-label>{{ relay.name }}</q-item-label>
-                            <q-item-label caption>{{ relay.code }}</q-item-label>
-                          </q-item-section>
-                          <q-item-section side>
-                            <q-btn round size="sm" @click="edit('relay', selected, relay)">
-                              <q-icon name="edit" />
-                            </q-btn>
-                          </q-item-section>
-                        </q-item>
-                      </q-list>
-                    </q-scroll-area>
-                  </q-tab-panel>
-                </q-tab-panels>
-              </q-card-section>
-            </q-card>
+            <ZonesRelays />
           </template>
         </q-splitter>
       </q-card-section>
@@ -189,11 +68,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import Locals from '../components/zones/locals'
+import ZonesRelays from '../components/zones/zonesRelays'
 
 // import EventLogTable from '../components/eventlog/eventlogTable'
 
 export default {
-  // components: { EventLogTable },
+  components: { Locals, ZonesRelays },
   computed: {
     ...mapState({
       locals: state => state.zones.locals,
