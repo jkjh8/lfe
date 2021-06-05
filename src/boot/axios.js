@@ -39,3 +39,5 @@ axios.interceptors.response.use((response) => {
 })
 
 Vue.prototype.$axios = axios
+
+export default axios

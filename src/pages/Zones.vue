@@ -96,20 +96,20 @@ export default {
   mounted () {
     this.get()
     this.$socket.on('zones', (data) => {
-      console.log('socket.io ', data)
+      // console.log('socket.io ', data)
+      this.$store.dispatch('zones/update', data)
     })
   },
   methods: {
     get () {
       this.$axios.get('/zones/get').then(res => {
-        console.log(res.data.locals)
         this.$store.commit('zones/updateLocals', res.data.locals)
       })
     },
     select (id) {
       this.$store.commit('zones/updateSelected', id)
-      this.$store.commit('zones/updateZones', this.locals[id - 1].zones)
-      this.$store.commit('zones/updateRelays', this.locals[id - 1].relays)
+      // this.$store.commit('zones/updateZones', this.locals[id - 1].zones)
+      // this.$store.commit('zones/updateRelays', this.locals[id - 1].relays)
     },
     edit (mode, id, value) {
       console.log(mode, id, value)
