@@ -61,7 +61,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import ZonesDetail from './zonesDetail'
+import ZonesDetail from './zone/zonesDetail'
 import RelaysDetail from './relay/relaysDetail'
 import AddRelays from './relay/addRelays'
 

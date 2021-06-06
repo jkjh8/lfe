@@ -1,5 +1,39 @@
 import axios from 'src/boot/axios'
+import { Notify } from 'quasar'
 
+function errNotify () {
+  Notify.create({
+    type: 'negative',
+    message: '정보를 갱신하지 못하였습니다.',
+    position: 'center',
+    timeout: 1000
+  })
+}
+
+export function updateZoneName ({ state, dispatch }, payload) {
+  const reqData = {
+    local: state.selected,
+    zone: payload
+  }
+  axios.post('/zones/updateZoneName', reqData).then(res => {
+    dispatch('get')
+  }).catch((err) => {
+    console.log(err)
+    errNotify()
+  })
+}
+
+export function deleteZone ({ state, dispatch }, payload) {
+  const reqData = { local: state.selected, zone: payload }
+  axios.post('/zones/deleteZone', reqData).then((res) => {
+    dispatch('get')
+  }).catch((err) => {
+    console.log(err)
+    errNotify()
+  })
+}
+
+// Relays
 export function addRelays ({ state, dispatch }, payload) {
   const reqData = {
     local: state.selected,
@@ -9,6 +43,7 @@ export function addRelays ({ state, dispatch }, payload) {
     dispatch('get')
   }).catch((err) => {
     console.log(err)
+    errNotify()
   })
 }
 
@@ -21,6 +56,7 @@ export function updateRelay ({ state, dispatch }, payload) {
     dispatch('get')
   }).catch(err => {
     console.err(err)
+    errNotify()
   })
 }
 
@@ -30,9 +66,11 @@ export function deleteRelay ({ state, dispatch }, payload) {
     dispatch('get')
   }).catch((err) => {
     console.log(err)
+    errNotify()
   })
 }
 
+// refresh locals
 export async function get ({ dispatch }) {
   try {
     const r = await axios.get('/zones/get')
@@ -41,6 +79,7 @@ export async function get ({ dispatch }) {
     }
   } catch (err) {
     console.log(err)
+    errNotify()
   }
 }
 

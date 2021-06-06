@@ -60,6 +60,7 @@ export default {
   data () {
     return {
       relayState: {
+        _id: '',
         id: null,
         name: '',
         code: '',
@@ -69,6 +70,7 @@ export default {
   },
   mounted () {
     this.relayState.id = this.selectedRelay
+    this.relayState._id = this.relays[this.selectedRelay]._id
     this.relayState.name = this.relays[this.selectedRelay].name
     this.relayState.code = this.relays[this.selectedRelay].code
     this.relayState.value = this.relays[this.selectedRelay].value

@@ -110,25 +110,6 @@ export default {
       this.$store.commit('zones/updateSelected', id)
       // this.$store.commit('zones/updateZones', this.locals[id - 1].zones)
       // this.$store.commit('zones/updateRelays', this.locals[id - 1].relays)
-    },
-    edit (mode, id, value) {
-      console.log(mode, id, value)
-      this.$q.dialog({
-        title: '수정',
-        message: `${this.locals[id - 1].name} ${mode} ${value.id}`,
-        prompt: {
-          model: value.name,
-          type: 'text' // optional
-        },
-        cancel: true,
-        persistent: true
-      }).onOk(data => {
-        console.log('>>>> OK, received', data)
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
     }
   }
 }

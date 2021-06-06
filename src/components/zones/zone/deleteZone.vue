@@ -2,7 +2,7 @@
   <q-card style="width: 400px">
     <q-card-section class="q-pb-sm">
       <div class="text-h6">
-        릴레이 채널 삭제
+        방송 구간 삭제
       </div>
     </q-card-section>
     <q-card-section class="q-py-sm">
@@ -13,20 +13,22 @@
             text-color="white"
             size="30px"
           >
-            {{ relays[selectedRelay].id + 1 }}
+            {{ zones[selectedZone].id + 1 }}
           </q-avatar>
         </q-item-section>
 
         <q-item-section avatar>
           <div>
-            <span class="text-weight-bold">{{ relays[selectedRelay].name }}</span>
+            <span class="text-weight-bold">{{ zones[selectedZone].name }}</span>
             <span> 를 삭제 하시겠습니까?</span>
           </div>
         </q-item-section>
 
       </q-item>
     </q-card-section>
+
     <q-separator />
+
     <q-card-actions align="right">
       <q-btn
         class="q-px-sm"
@@ -50,11 +52,11 @@
 import { mapState } from 'vuex'
 
 export default {
-  props: ['selectedRelay'],
+  props: ['selectedZone'],
   computed: {
     ...mapState({
       locals: state => state.zones.locals,
-      relays: state => state.zones.relays,
+      zones: state => state.zones.zones,
       selected: state => state.zones.selected
     })
   },
@@ -68,7 +70,7 @@ export default {
   },
   methods: {
     submit () {
-      this.$store.dispatch('zones/deleteRelay', this.relays[this.selectedRelay])
+      this.$store.dispatch('zones/deleteZone', this.zones[this.selectedZone])
     }
   }
 }
