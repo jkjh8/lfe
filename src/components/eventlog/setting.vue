@@ -1,17 +1,38 @@
 <template>
   <div class="row setting justify-end">
     <div class="row">
-      <q-select
-        class="q-mr-md"
-        style="width: 100px;"
-        v-model="select"
-        :options="options"
-        outlined
-        dense
-        color="teal-14"
-        label="표시 갯수"
-        @input="selValue"
-      ></q-select>
+      <div class="row q-mx-md" style="width: 150px">
+        <q-input
+          v-model="page"
+          dense
+          outlined
+          label="바로가기"
+          color="teal-14"
+        >
+          <template append>
+            <q-btn
+              flat
+              round
+              @click="directGo"
+            >
+              Go
+            </q-btn>
+          </template>
+        </q-input>
+      </div>
+      <div>
+        <q-select
+          class="q-mr-md"
+          style="width: 100px;"
+          v-model="select"
+          :options="options"
+          outlined
+          dense
+          color="teal-14"
+          label="표시 갯수"
+          @input="selValue"
+        ></q-select>
+      </div>
     </div>
     <div class="absolute-right">
       <q-btn class="q-ma-xs" round size="sm" @click="$emit('close')">
@@ -33,6 +54,7 @@ export default {
   },
   data () {
     return {
+      page: '',
       select: '',
       options: [5, 10, 15, 20, 30, 40, 50]
     }
@@ -42,9 +64,11 @@ export default {
   },
   methods: {
     async selValue (val) {
-      console.log(val)
       await this.$store.commit('eventlog/updatelimit', val)
       this.$store.dispatch('eventlog/getLog')
+    },
+    directGo () {
+      this.$root.$emit('changePage', this.page)
     }
   }
 }

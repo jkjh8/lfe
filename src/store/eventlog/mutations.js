@@ -3,11 +3,11 @@ export function updatePage (state, payload) {
 }
 
 export function updateDocs (state, payload) {
-  state.pages.totalPages = payload.totalPages
-  state.pages.itemsPerPage = payload.itemsPerPage
+  state.pages.totalPages = Number(payload.totalPages)
+  state.pages.itemsPerPage = Number(payload.itemsPerPage)
   // state.pages.limit = payload.limit
-  state.pages.pagingCounter = payload.pagingCounter
-  state.pages.totalDocs = payload.totalDocs
+  state.pages.pagingCounter = Number(payload.pagingCounter)
+  state.pages.totalDocs = Number(payload.totalDocs)
   state.logs.items = payload.docs
 }
 

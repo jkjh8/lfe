@@ -61,6 +61,7 @@ export default {
       current: 1,
       maxPage: 100,
       loading: false,
+      page: 1,
       pagination: {
         sortBy: 'date',
         descending: false,
@@ -70,16 +71,20 @@ export default {
     }
   },
   mounted () {
-    this.getlog()
+    this.$refs.table.setPagination({ rowsPerPage: this.pages.limit })
+    this.$store.dispatch('eventlog/getLog')
+    this.$root.$on('changePage', (page) => {
+      this.current = Number(page)
+      console.log(page)
+      this.$store.commit('eventlog/updatePage', page)
+      this.$store.dispatch('eventlog/getLog')
+    })
   },
   methods: {
-    async getlog () {
-      await this.$store.dispatch('eventlog/getLog')
-      this.$refs.table.setPagination({ rowsPerPage: this.pages.limit })
-    },
     async changePage (page) {
+      // this.current = Number(page)
       await this.$store.commit('eventlog/updatePage', page)
-      this.getlog()
+      this.$store.dispatch('eventlog/getLog')
     },
     timeFormat (time) {
       return moment(time).format('YY-MM-DD hh:mm:ss a')
