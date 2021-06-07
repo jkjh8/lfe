@@ -1,12 +1,9 @@
-import axios from 'axios'
-
-axios.defaults.baseURL = `http://${window.location.hostname}:3000`
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.withCredentials = true
+import axios from 'src/boot/axios'
+import { Loading } from 'quasar'
 
 export function getLog ({ state, commit }) {
+  Loading.show()
   commit('loading', true)
-  console.log(state.logs)
   let query = `page=${state.pages.page}`
   query = query + `&limit=${state.pages.limit}`
   query = query + `&search=${state.logs.search}`
@@ -19,4 +16,5 @@ export function getLog ({ state, commit }) {
     console.log(error)
     commit('loading', false)
   })
+  Loading.hide()
 }

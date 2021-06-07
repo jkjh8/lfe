@@ -3,7 +3,7 @@
     <q-card-section class="q-pb-sm">
       <div class="row items-center">
         <div class="text-h6">
-          릴레이 채널 추가
+          지점 추가
         </div>
         <q-space />
         <q-btn round flat icon="add_circle_outline" @click="addItem"></q-btn>
@@ -11,10 +11,10 @@
     </q-card-section>
     <q-card-section class="q-py-sm">
       <q-scroll-area ref="scrollArea" style="height: 300px;">
-        <q-list v-if="addRelay">
+        <q-list v-if="addLocals">
           <q-item
-            v-for="(relay, idx) in addRelay"
-            :key="relay.id"
+            v-for="(local, idx) in addLocals"
+            :key="local.id"
             class="q-py-none"
             dense
           >
@@ -24,29 +24,22 @@
                 text-color="white"
                 size="30px"
               >
-                {{ relay.id + 1 }}
+                {{ local.id }}
               </q-avatar>
             </q-item-section>
 
             <q-item-section>
-              <q-input
-                v-model="addRelay[idx].name"
-                label="Relay Name"
-                :hint="addRelay[idx].code"
-                color="teal-14"
-                dense
-                @keyup="checkCode(idx)"
-                @blur="checkCode(idx)"
-              />
-            </q-item-section>
-
-            <q-item-section side>
-              <q-toggle
-                v-model="addRelay[idx].value"
-                checked-icon="check"
-                color="green"
-                unchecked-icon="clear"
-              />
+              <div>
+                <q-input
+                  v-model="addLocals[idx].name"
+                  label="Local Name"
+                  :hint="addLocals[idx].code"
+                  color="teal-14"
+                  dense
+                  @keyup="checkCode(idx)"
+                  @blur="checkCode(idx)"
+                />
+              </div>
             </q-item-section>
           </q-item>
         </q-list>
@@ -74,21 +67,19 @@
 
 <script>
 import { mapState } from 'vuex'
-import strToHex from '../../../mixins/strToHex'
+import strToHex from '../../mixins/strToHex'
 
 export default {
   mixins: [strToHex],
-  props: ['selectedRelay'],
   computed: {
     ...mapState({
       locals: state => state.zones.locals,
-      relays: state => state.zones.relays,
       selected: state => state.zones.selected
     })
   },
   data () {
     return {
-      addRelay: []
+      addLocals: []
     }
   },
   mounted () {
@@ -97,23 +88,22 @@ export default {
   methods: {
     addItem () {
       let id
-      if (this.addRelay.length === 0) {
-        id = this.relays.length
+      if (this.addLocals.length === 0) {
+        id = this.locals.length + 1
       } else {
-        id = this.addRelay[this.addRelay.length - 1].id + 1
+        id = this.addLocals[this.addLocals.length - 1].id + 1
       }
-      this.addRelay.push({
+      this.addLocals.push({
         id: id,
         name: '',
-        code: '',
-        value: false
+        code: ''
       })
     },
     checkCode (idx) {
-      this.addRelay[idx].code = this.encodeUTF16(this.addRelay[idx].name)
+      this.addLocals[idx].code = this.encodeUTF16(this.addLocals[idx].name)
     },
     submit () {
-      this.$store.dispatch('zones/addRelays', this.addRelay)
+      this.$store.dispatch('zones/addLocals', this.addLocals)
     }
   }
 }

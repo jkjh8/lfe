@@ -41,6 +41,10 @@
         </div>
       </q-card-section>
       <q-separator />
+      <q-card-section v-if="zones" class="q-pt-sm q-pb-none">
+        <ZoneSelect @close="zones=false" />
+      </q-card-section>
+
       <q-card-section v-if="search" class="q-pt-sm q-pb-none">
         <Search @close="search=false" />
       </q-card-section>
@@ -60,11 +64,12 @@
 import { mapState } from 'vuex'
 
 import EventLogTable from '../components/eventlog/eventlogTable'
+import ZoneSelect from '../components/eventlog/zoneSelect.vue'
 import Search from '../components/eventlog/search'
 import Settings from '../components/eventlog/setting'
 
 export default {
-  components: { EventLogTable, Search, Settings },
+  components: { ZoneSelect, EventLogTable, Search, Settings },
   computed: {
     ...mapState({
       pages: state => state.eventlog.pages,

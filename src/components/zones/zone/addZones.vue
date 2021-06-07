@@ -3,7 +3,7 @@
     <q-card-section class="q-pb-sm">
       <div class="row items-center">
         <div class="text-h6">
-          릴레이 채널 추가
+          방송 구간 추가
         </div>
         <q-space />
         <q-btn round flat icon="add_circle_outline" @click="addItem"></q-btn>
@@ -11,10 +11,10 @@
     </q-card-section>
     <q-card-section class="q-py-sm">
       <q-scroll-area ref="scrollArea" style="height: 300px;">
-        <q-list v-if="addRelay">
+        <q-list v-if="addZones">
           <q-item
-            v-for="(relay, idx) in addRelay"
-            :key="relay.id"
+            v-for="(zone, idx) in addZones"
+            :key="zone.id"
             class="q-py-none"
             dense
           >
@@ -24,29 +24,33 @@
                 text-color="white"
                 size="30px"
               >
-                {{ relay.id + 1 }}
+                {{ zone.id + 1 }}
               </q-avatar>
             </q-item-section>
 
             <q-item-section>
-              <q-input
-                v-model="addRelay[idx].name"
-                label="Relay Name"
-                :hint="addRelay[idx].code"
-                color="teal-14"
-                dense
-                @keyup="checkCode(idx)"
-                @blur="checkCode(idx)"
-              />
-            </q-item-section>
-
-            <q-item-section side>
-              <q-toggle
-                v-model="addRelay[idx].value"
-                checked-icon="check"
-                color="green"
-                unchecked-icon="clear"
-              />
+              <div class="fit row no-wrap justify-between">
+                <div class="col-7">
+                  <q-input
+                    v-model="addZones[idx].name"
+                    label="Zone Name"
+                    :hint="addZones[idx].code"
+                    color="teal-14"
+                    dense
+                    @keyup="checkCode(idx)"
+                    @blur="checkCode(idx)"
+                  />
+                </div>
+                <div class="col-3">
+                  <q-select
+                    v-model="addZones[idx].type"
+                    label="Type"
+                    :options="options"
+                    color="teal-14"
+                    dense
+                  />
+                </div>
+              </div>
             </q-item-section>
           </q-item>
         </q-list>
@@ -78,17 +82,18 @@ import strToHex from '../../../mixins/strToHex'
 
 export default {
   mixins: [strToHex],
-  props: ['selectedRelay'],
+  props: ['selectedzone'],
   computed: {
     ...mapState({
       locals: state => state.zones.locals,
-      relays: state => state.zones.relays,
+      zones: state => state.zones.zones,
       selected: state => state.zones.selected
     })
   },
   data () {
     return {
-      addRelay: []
+      addZones: [],
+      options: ['zone', 'e/s']
     }
   },
   mounted () {
@@ -97,23 +102,23 @@ export default {
   methods: {
     addItem () {
       let id
-      if (this.addRelay.length === 0) {
-        id = this.relays.length
+      if (this.addZones.length === 0) {
+        id = this.zones.length
       } else {
-        id = this.addRelay[this.addRelay.length - 1].id + 1
+        id = this.addZones[this.addZones.length - 1].id + 1
       }
-      this.addRelay.push({
+      this.addZones.push({
         id: id,
         name: '',
         code: '',
-        value: false
+        type: 'zone'
       })
     },
     checkCode (idx) {
-      this.addRelay[idx].code = this.encodeUTF16(this.addRelay[idx].name)
+      this.addZones[idx].code = this.encodeUTF16(this.addZones[idx].name)
     },
     submit () {
-      this.$store.dispatch('zones/addRelays', this.addRelay)
+      this.$store.dispatch('zones/addZones', this.addZones)
     }
   }
 }

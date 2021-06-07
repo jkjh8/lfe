@@ -10,7 +10,7 @@ export default function () {
     },
     logs: {
       items: [],
-      zones: [],
+      zones: '',
       search: '',
       loading: false
     }

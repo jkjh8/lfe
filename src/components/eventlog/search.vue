@@ -9,6 +9,7 @@
         color="teal-14"
         hide-bottom-space
         @keyup.enter="startSearch"
+        @clear="clearSearch"
       ></q-input>
       <q-btn
         class="q-ml-xs"
@@ -20,7 +21,7 @@
       </q-btn>
     </div>
     <div class="absolute-right">
-      <q-btn class="q-ma-xs" round size="sm" @click="$emit('close')">
+      <q-btn class="q-ma-xs" round size="sm" @click="exit">
         <q-icon name="close" />
       </q-btn>
     </div>
@@ -36,9 +37,17 @@ export default {
   },
   methods: {
     startSearch () {
-      console.log(this.search)
       this.$store.commit('eventlog/updateSearch', this.search)
       this.$store.dispatch('eventlog/getLog')
+    },
+    clearSearch () {
+      this.$store.commit('eventlog/updateSearch', '')
+      this.$store.dispatch('eventlog/getLog')
+    },
+    exit () {
+      this.$store.commit('eventlog/updateSearch', '')
+      this.$store.dispatch('eventlog/getLog')
+      this.$emit('close')
     }
   }
 }

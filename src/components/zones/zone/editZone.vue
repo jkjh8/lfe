@@ -15,12 +15,13 @@
             :hint="zoneState.code"
             color="teal-14"
             @keyup="checkCode"
+            @blur="checkCode"
           />
         </div>
         <div class="col-3">
           <q-select
             v-model="zoneState.type"
-            label="type"
+            label="Type"
             :options="options"
             color="teal-14"
           />

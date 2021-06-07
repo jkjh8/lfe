@@ -18,7 +18,7 @@
                 class="absolute-rignt"
                 flat
                 round
-                @click.prevent.stop=""
+                @click.prevent.stop="zone = true"
               >
                 <q-icon name="add_circle_outline" />
               </q-btn>
@@ -52,6 +52,11 @@
           </q-tab-panel>
         </q-tab-panels>
       </q-card-section>
+
+      <q-dialog v-model="zone">
+        <AddZones />
+      </q-dialog>
+
       <q-dialog v-model="relay">
         <AddRelays />
       </q-dialog>
@@ -63,10 +68,11 @@
 import { mapState } from 'vuex'
 import ZonesDetail from './zone/zonesDetail'
 import RelaysDetail from './relay/relaysDetail'
+import AddZones from './zone/addZones'
 import AddRelays from './relay/addRelays'
 
 export default {
-  components: { ZonesDetail, RelaysDetail, AddRelays },
+  components: { ZonesDetail, RelaysDetail, AddZones, AddRelays },
   computed: {
     ...mapState({
       locals: state => state.zones.locals,

@@ -102,9 +102,10 @@ export default {
   },
   methods: {
     get () {
-      this.$axios.get('/zones/get').then(res => {
-        this.$store.commit('zones/updateLocals', res.data.locals)
-      })
+      this.$store.dispatch('zones/get')
+      // this.$axios.get('/zones/get').then(res => {
+      //   this.$store.commit('zones/updateLocals', res.data.locals)
+      // })
     },
     select (id) {
       this.$store.commit('zones/updateSelected', id)

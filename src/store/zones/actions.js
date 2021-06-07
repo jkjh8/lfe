@@ -1,5 +1,5 @@
 import axios from 'src/boot/axios'
-import { Notify } from 'quasar'
+import { Notify, Loading } from 'quasar'
 
 function errNotify () {
   Notify.create({
@@ -10,7 +10,70 @@ function errNotify () {
   })
 }
 
+// refresh zones relays
+export function refresh ({ dispatch }, payload) {
+  Loading.show()
+  axios.get(`/zones/resetZones?id=${payload}`).then((res) => {
+    dispatch('get')
+  }).catch((err) => {
+    console.log(err)
+    errNotify()
+  })
+  Loading.hide()
+}
+
+// locals
+export function addLocals ({ dispatch }, payload) {
+  Loading.show()
+  axios.post('/zones/addLocals', payload).then(res => {
+    dispatch('get')
+  }).catch((err) => {
+    console.log(err)
+    errNotify()
+  })
+  Loading.hide()
+}
+
+export function updateLocalName ({ dispatch }, payload) {
+  Loading.show()
+  axios.post('/zones/updateLocalName', payload).then((res) => {
+    dispatch('get')
+  }).catch((err) => {
+    console.log(err)
+    errNotify()
+  })
+  Loading.hide()
+}
+
+export function deleteLocal ({ dispatch }, payload) {
+  Loading.show()
+  axios.get(`/zones/deleteLocal?id=${payload}`).then((res) => {
+    dispatch('get')
+  }).catch((err) => {
+    console.log(err)
+    errNotify()
+  })
+  Loading.hide()
+}
+
+// Zones
+export function addZones ({ state, dispatch }, payload) {
+  Loading.show()
+  const reqData = {
+    local: state.selected,
+    zone: payload
+  }
+  axios.post('/zones/addZones', reqData).then(res => {
+    dispatch('get')
+  }).catch((err) => {
+    console.log(err)
+    errNotify()
+  })
+  Loading.hide()
+}
+
 export function updateZoneName ({ state, dispatch }, payload) {
+  Loading.show()
   const reqData = {
     local: state.selected,
     zone: payload
@@ -21,9 +84,11 @@ export function updateZoneName ({ state, dispatch }, payload) {
     console.log(err)
     errNotify()
   })
+  Loading.hide()
 }
 
 export function deleteZone ({ state, dispatch }, payload) {
+  Loading.show()
   const reqData = { local: state.selected, zone: payload }
   axios.post('/zones/deleteZone', reqData).then((res) => {
     dispatch('get')
@@ -31,10 +96,12 @@ export function deleteZone ({ state, dispatch }, payload) {
     console.log(err)
     errNotify()
   })
+  Loading.hide()
 }
 
 // Relays
 export function addRelays ({ state, dispatch }, payload) {
+  Loading.show()
   const reqData = {
     local: state.selected,
     relay: payload
@@ -45,9 +112,11 @@ export function addRelays ({ state, dispatch }, payload) {
     console.log(err)
     errNotify()
   })
+  Loading.hide()
 }
 
 export function updateRelay ({ state, dispatch }, payload) {
+  Loading.show()
   const reqData = {
     local: state.selected,
     relay: payload
@@ -58,9 +127,11 @@ export function updateRelay ({ state, dispatch }, payload) {
     console.err(err)
     errNotify()
   })
+  Loading.hide()
 }
 
 export function deleteRelay ({ state, dispatch }, payload) {
+  Loading.show()
   const reqData = { local: state.selected, relay: payload }
   axios.post('/zones/deleteRelay', reqData).then((res) => {
     dispatch('get')
@@ -68,10 +139,12 @@ export function deleteRelay ({ state, dispatch }, payload) {
     console.log(err)
     errNotify()
   })
+  Loading.hide()
 }
 
 // refresh locals
 export async function get ({ dispatch }) {
+  Loading.show()
   try {
     const r = await axios.get('/zones/get')
     if (r) {
@@ -81,6 +154,7 @@ export async function get ({ dispatch }) {
     console.log(err)
     errNotify()
   }
+  Loading.hide()
 }
 
 export function update ({ state, commit }, payload) {

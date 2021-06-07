@@ -2,29 +2,25 @@
   <q-card style="width: 400px">
     <q-card-section>
       <div class="text-h6">
-        릴레이 이름 수정
+        지점 이름 수정
       </div>
     </q-card-section>
-    <q-card-section>
-      <div class="row">
+
+    <q-card-section class="q-mx-sm">
+      <div>
         <q-input
-          class="col-10"
-          v-model="relayState.name"
-          label="Relay Name"
-          :hint="relayState.code"
+          v-model="localState.name"
+          label="Local Name"
+          :hint="localState.code"
+          color="teal-14"
           @keyup="checkCode"
           @blur="checkCode"
-        >
-        </q-input>
-        <q-toggle
-          v-model="relayState.value"
-          checked-icon="check"
-          color="green"
-          unchecked-icon="clear"
         />
       </div>
     </q-card-section>
+
     <q-separator />
+
     <q-card-actions align="right">
       <q-btn
         class="q-px-sm"
@@ -46,43 +42,39 @@
 
 <script>
 import { mapState } from 'vuex'
-import strToHex from '../../../mixins/strToHex'
+import strToHex from '../../mixins/strToHex'
 
 export default {
+  props: ['selectedLocal'],
   mixins: [strToHex],
-  props: ['selectedRelay'],
   computed: {
     ...mapState({
       locals: state => state.zones.locals,
-      relays: state => state.zones.relays,
       selected: state => state.zones.selected
     })
   },
   data () {
     return {
-      relayState: {
-        _id: '',
+      localState: {
+        _id: null,
         id: null,
         name: '',
-        code: '',
-        value: false
+        code: ''
       }
     }
   },
   mounted () {
-    this.relayState.id = this.selectedRelay
-    this.relayState._id = this.relays[this.selectedRelay]._id
-    this.relayState.name = this.relays[this.selectedRelay].name
-    this.relayState.code = this.relays[this.selectedRelay].code
-    this.relayState.value = this.relays[this.selectedRelay].value
+    this.localState._id = this.locals[this.selectedLocal - 1]._id
+    this.localState.id = this.selectedLocal
+    this.localState.name = this.locals[this.selectedLocal - 1].name
+    this.localState.code = this.locals[this.selectedLocal - 1].code
   },
   methods: {
     checkCode () {
-      this.relayState.code = this.encodeUTF16(this.relayState.name)
+      this.localState.code = this.encodeUTF16(this.localState.name)
     },
     submit () {
-      console.log('OK')
-      this.$store.dispatch('zones/updateRelay', this.relayState)
+      this.$store.dispatch('zones/updateLocalName', this.localState)
     }
   }
 }
