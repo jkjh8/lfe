@@ -9,3 +9,7 @@ export function nickname (state) {
 export function user (state) {
   return state.user
 }
+
+export function usersCount (state) {
+  return state.users.length
+}

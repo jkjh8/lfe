@@ -5,8 +5,17 @@
       dense
       indicator-color="transparent"
       class="text-grey"
-      active-color="teal"
+      active-color=
+      "teal"
     >
+      <q-route-tab
+          class="qtb"
+          to="/users"
+          tag="li"
+          exact
+        >
+          사용자 관리
+      </q-route-tab>
       <q-route-tab
         class="qtb"
         to="/zones"

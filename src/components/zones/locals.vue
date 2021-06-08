@@ -132,6 +132,6 @@ export default {
 <style>
 .zone-active-link {
   color: white;
-  background: rgb(76, 94, 94);
+  background: rgb(145, 165, 165);
 }
 </style>

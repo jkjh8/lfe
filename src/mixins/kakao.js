@@ -53,6 +53,9 @@ export default {
                 }
               }
             })
+          },
+          fail: (err) => {
+            console.log(err)
           }
         })
       } else {

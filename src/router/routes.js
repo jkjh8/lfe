@@ -24,6 +24,16 @@ const routes = [
     ]
   },
   {
+    path: '/users',
+    component: () => import('layouts/DefaultLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/Users.vue') }
+    ],
+    beforeEnter: async (to, from, next) => {
+      getUser(to, from, next)
+    }
+  },
+  {
     path: '/zones',
     component: () => import('layouts/DefaultLayout.vue'),
     children: [
