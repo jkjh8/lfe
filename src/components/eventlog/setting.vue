@@ -1,5 +1,8 @@
 <template>
   <div class="row setting justify-end">
+    <div class="absolute-left text-subtitle1 text-teal q-mt-sm q-ml-lg">
+      부가 기능
+    </div>
     <div class="row">
       <div class="row q-mx-md" style="width: 150px">
         <q-input
@@ -9,14 +12,16 @@
           label="바로가기"
           color="teal-14"
         >
-          <template append>
-            <q-btn
+          <template v-slot:append>
+            <q-icon
+              class="cursor-pointer"
+              name="send"
+              size="sm"
               flat
-              round
               @click="directGo"
+              @keyup.enter="directGo"
             >
-              Go
-            </q-btn>
+            </q-icon>
           </template>
         </q-input>
       </div>
@@ -63,9 +68,10 @@ export default {
     this.select = this.pages.limit
   },
   methods: {
-    async selValue (val) {
-      await this.$store.commit('eventlog/updatelimit', val)
+    selValue (val) {
+      this.$store.commit('eventlog/updatelimit', val)
       this.$store.dispatch('eventlog/getLog')
+      this.$root.$emit('changeLimit')
     },
     directGo () {
       this.$root.$emit('changePage', this.page)

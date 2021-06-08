@@ -30,3 +30,15 @@ export function updateZone (state, payload) {
 export function updateSearch (state, payload) {
   state.logs.search = payload
 }
+
+export function updateDateEnable (state, payload) {
+  state.date.enable = payload
+}
+
+export function updateDateStart (state, payload) {
+  state.date.start = payload
+}
+
+export function updateDateEnd (state, payload) {
+  state.date.end = payload
+}

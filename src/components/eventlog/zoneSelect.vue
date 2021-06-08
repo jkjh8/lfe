@@ -1,5 +1,8 @@
 <template>
   <div class="row search justify-end">
+    <div class="absolute-left text-subtitle1 text-teal q-mt-sm q-ml-lg">
+      지점 선택
+    </div>
     <div class="row q-mr-md">
       <q-select
         outlined
@@ -79,7 +82,10 @@ export default {
       console.log(this.model)
     },
     exit () {
+      console.log('exit')
       this.model = null
+      this.$store.commit('eventlog/updateZone', '')
+      this.$store.dispatch('eventlog/getLog')
       this.$emit('close')
     }
   }

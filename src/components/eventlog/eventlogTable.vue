@@ -79,6 +79,9 @@ export default {
       this.$store.commit('eventlog/updatePage', page)
       this.$store.dispatch('eventlog/getLog')
     })
+    this.$root.$on('changeLimit', () => {
+      this.$refs.table.setPagination({ rowsPerPage: this.pages.limit })
+    })
   },
   methods: {
     async changePage (page) {

@@ -13,6 +13,11 @@ export default function () {
       zones: '',
       search: '',
       loading: false
+    },
+    date: {
+      enable: false,
+      start: null,
+      end: null
     }
   }
 }
