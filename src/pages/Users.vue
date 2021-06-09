@@ -39,7 +39,7 @@
               :value="props.value"
               dense
               borderless
-              @input="levelUpdate(props.row)"
+              @input="levelUpdate($event, props.row)"
             ></q-select>
           </q-td>
         </template>
@@ -107,8 +107,12 @@ export default {
         }
       })
     },
-    levelUpdate (idx) {
-      console.log(idx)
+    levelUpdate (level, idx) {
+      const rt = {
+        _id: idx._id,
+        level: level
+      }
+      console.log(rt)
     },
     deleteUser (idx) {
       console.log(idx)
