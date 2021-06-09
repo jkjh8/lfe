@@ -39,7 +39,24 @@
               :value="props.value"
               dense
               borderless
+              @input="levelUpdate(props.row)"
             ></q-select>
+          </q-td>
+        </template>
+
+        <template v-slot:body-cell-admin="props">
+          <q-td :props="props">
+            <q-checkbox
+              :value="props.value"
+              color="teal-14"
+              @input="adminUpdate(props.row)"
+            />
+          </q-td>
+        </template>
+
+        <template v-slot:body-cell-actions="props">
+          <q-td :props="props">
+            <q-btn round size="sm" icon="delete" @click="deleteUser(props.row)" />
           </q-td>
         </template>
       </q-table>
@@ -69,7 +86,9 @@ export default {
         { name: 'provider', align: 'center', label: '공급자', field: 'provider', sortable: true },
         { name: 'createAt', align: 'center', label: '가입일', field: 'createAt', sortable: true },
         { name: 'loginAt', align: 'center', label: '접속일', field: 'loginAt', sortable: true },
-        { name: 'level', align: 'center', label: '등급', field: 'level', sortable: true }
+        { name: 'level', align: 'center', label: '등급', field: 'level', sortable: true },
+        { name: 'admin', align: 'center', label: '관라자', field: 'admin', sortable: true },
+        { name: 'actions', align: 'center', label: 'Actions', field: 'actions' }
       ],
       levelOption: [0, 1, 2, 3, 4, 5]
     }
@@ -86,6 +105,17 @@ export default {
         if (err.response.status === 403) {
           console.log('권한이 없습니다.')
         }
+      })
+    },
+    levelUpdate (idx) {
+      console.log(idx)
+    },
+    deleteUser (idx) {
+      console.log(idx)
+    },
+    adminUpdate (idx) {
+      this.$axios.post('/auth/admin', idx).then((res) => {
+        this.$store.commit('user/updateUsers', res.data.users)
       })
     },
     timeFormat (time) {
