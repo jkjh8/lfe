@@ -61,14 +61,20 @@
         </template>
       </q-table>
     </q-card-section>
+
+    <q-dialog v-model="delUser">
+      <DeleteUser :currentUser="currentUser" />
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
 import { mapState, mapGetters } from 'vuex'
+import DeleteUser from '../components/users/deleteUser.vue'
 
 export default {
+  components: { DeleteUser },
   computed: {
     ...mapState({
       users: state => state.user.users
@@ -90,7 +96,9 @@ export default {
         { name: 'admin', align: 'center', label: '관라자', field: 'admin', sortable: true },
         { name: 'actions', align: 'center', label: 'Actions', field: 'actions' }
       ],
-      levelOption: [0, 1, 2, 3, 4, 5]
+      levelOption: [0, 1, 2, 3, 4, 5],
+      delUser: false,
+      currentUser: null
     }
   },
   mounted () {
@@ -112,14 +120,22 @@ export default {
         _id: idx._id,
         level: level
       }
-      console.log(rt)
+      this.$axios.post('/auth/updateLevel', rt).then((res) => {
+        this.$store.commit('user/updateUsers', res.data.users)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     deleteUser (idx) {
       console.log(idx)
+      this.currentUser = idx
+      this.delUser = true
     },
     adminUpdate (idx) {
       this.$axios.post('/auth/admin', idx).then((res) => {
         this.$store.commit('user/updateUsers', res.data.users)
+      }).catch(err => {
+        console.log(err)
       })
     },
     timeFormat (time) {

@@ -17,7 +17,13 @@
           </div>
           <q-space />
           <div class="self-center">
-            <div class="row">
+            <div class="row no-wrap">
+              <q-btn flat round @click="download=!download">
+                <q-icon name="download" />
+                <q-tooltip :delay="1000" content-class="bg-teal-14" :offset="[10, 10]">
+                  지역 선택
+                </q-tooltip>
+              </q-btn>
               <q-btn flat round @click="zones=!zones">
                 <q-icon name="business" />
                 <q-tooltip :delay="1000" content-class="bg-teal-14" :offset="[10, 10]">
@@ -57,6 +63,10 @@
         <EventLogTable />
       </q-card-section>
     </q-card>
+
+    <q-dialog v-model="download">
+      <Download />
+    </q-dialog>
   </q-page>
 </template>
 
@@ -64,12 +74,13 @@
 import { mapState } from 'vuex'
 
 import EventLogTable from '../components/eventlog/eventlogTable'
+import Download from '../components/eventlog/download.vue'
 import ZoneSelect from '../components/eventlog/zoneSelect.vue'
 import Search from '../components/eventlog/search'
 import Settings from '../components/eventlog/setting'
 
 export default {
-  components: { ZoneSelect, EventLogTable, Search, Settings },
+  components: { ZoneSelect, Download, EventLogTable, Search, Settings },
   computed: {
     ...mapState({
       pages: state => state.eventlog.pages,
@@ -78,6 +89,7 @@ export default {
   },
   data () {
     return {
+      download: false,
       zones: false,
       search: false,
       settings: false

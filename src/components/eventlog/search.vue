@@ -3,8 +3,8 @@
     <div class="absolute-left text-subtitle1 text-teal q-mt-sm q-ml-lg">
       검색
     </div>
-    <div class="row q-mr-md">
-      <div class="row">
+    <div class="row no-wrap q-mr-md">
+      <div class="row no-wrap">
         <div class="q-gutter-sm">
           <q-checkbox
             class="q-ml-xs"
@@ -76,7 +76,7 @@
 
       <q-separator class="q-mx-md" vertical />
 
-      <div class="row">
+      <div class="row no-wrap">
         <q-input
           v-model="search"
           outlined
