@@ -138,7 +138,18 @@ export default {
     }),
     ...mapGetters({
       localsName: 'zones/localsName'
-    })
+    }),
+    filename () {
+      if (this.zonesEnable && this.dateEnable) {
+        return `${moment().format('YYYY/MM/DD hh:mm:ss')}_${this.start}~${this.end}_${this.zones.join(',')}.csv`
+      } else if (!this.zonesEnable && this.dateEnable) {
+        return `${moment().format('YYYY/MM/DD hh:mm:ss')}_${this.start}~${this.end}.csv`
+      } else if (this.zonesEnable && !this.dateEnable) {
+        return `${moment().format('YYYY/MM/DD hh:mm:ss')}_${this.zones.join(',')}.csv`
+      } else {
+        return `${moment().format('YYYY/MM/DD hh:mm:ss')}.csv`
+      }
+    }
   },
   data () {
     return {
@@ -146,7 +157,7 @@ export default {
       zonesEnable: false,
       start: moment().format('YYYY/MM/DD'),
       end: moment().format('YYYY/MM/DD'),
-      zones: null,
+      zones: [],
       options: this.localsName
     }
   },
@@ -171,7 +182,19 @@ export default {
       console.log(this.zones)
     },
     submit () {
-      //
+      this.$q.loading.show()
+      this.$axios.get(`/log/getCsv?zones=${this.zones.join(',')}&date=${this.dateEnable}&start=${moment(this.start).format('x')}&end=${moment(this.end + ' 23:59:59').format('x')}`, { responseType: 'blob' }).then((res) => {
+        const blob = new Blob([res.data])
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(blob)
+        link.setAttribute('download', this.filename)
+        document.body.appendChild(link)
+        link.click()
+        URL.revokeObjectURL(link.href)
+      }).catch(err => {
+        console.log(err)
+      })
+      this.$q.loading.hide()
     }
   }
 }
