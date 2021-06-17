@@ -21,7 +21,7 @@
               <q-btn flat round @click="download=!download">
                 <q-icon name="download" />
                 <q-tooltip :delay="1000" content-class="bg-teal-14" :offset="[10, 10]">
-                  지역 선택
+                  다운로드
                 </q-tooltip>
               </q-btn>
               <q-btn flat round @click="zones=!zones">
@@ -96,7 +96,7 @@ export default {
     }
   },
   mounted () {
-    //
+    this.$store.dispatch('zones/get')
   },
   methods: {
     //

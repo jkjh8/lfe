@@ -111,7 +111,7 @@
     <q-card-actions align="right">
       <q-btn
         class="q-px-sm"
-        label="확인"
+        label="다운로드"
         color="teal-14"
         @click="submit"
         v-close-popup
