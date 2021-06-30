@@ -4,10 +4,21 @@
       <q-card-section class="q-py-xs">
         <div class="fit row">
           <div>
-            <div
-              class="text-h6 text-weight-bold"
-            >
-              이벤트 로그
+            <div class="row items-center">
+              <span class="text-h6 text-weight-bold">
+                이벤트 로그
+              </span>
+              <span>
+                <q-btn
+                  dense
+                  flat
+                  round
+                  icon="refresh"
+                  size="12px"
+                  color="teal-14"
+                  @click="$store.dispatch('eventlog/getLog')"
+                ></q-btn>
+              </span>
             </div>
             <div
               class="text-caption"

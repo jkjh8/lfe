@@ -17,6 +17,58 @@
           @blur="checkCode"
         />
       </div>
+      <div class="row justify-between q-mt-md">
+        <q-toggle
+          v-model="localState.es"
+          dense
+          left-label
+          label="E/S"
+          color="teal-14"
+        />
+        <q-select
+          style="width: 90px"
+          v-model="localState.esNum"
+          dense
+          label="Num of E/S"
+          :options="[1,2,3,4]"
+        />
+      </div>
+      <div class="row justify-between q-mt-md">
+        <span>
+          <q-input
+            v-model="localState.dsp.ip"
+            label="DSP IpAddress"
+            dense
+            type="url"
+          />
+        </span>
+        <span>
+          <q-input
+            v-model="localState.dsp.port"
+            label="Port"
+            dense
+            type="number"
+          />
+        </span>
+      </div>
+      <div class="row justify-between q-mt-md">
+        <span>
+          <q-input
+            v-model="localState.pagecontrol.ip"
+            label="PageControl IpAddress"
+            dense
+            type="url"
+          />
+        </span>
+        <span>
+          <q-input
+            v-model="localState.pagecontrol.port"
+            label="Port"
+            dense
+            type="number"
+          />
+        </span>
+      </div>
     </q-card-section>
 
     <q-separator />
@@ -59,15 +111,27 @@ export default {
         _id: null,
         id: null,
         name: '',
-        code: ''
+        code: '',
+        es: null,
+        esNum: 1,
+        dsp: { ip: '', port: 1023 },
+        pagecontrol: { ip: '', port: 8888 }
       }
     }
   },
   mounted () {
-    this.localState._id = this.locals[this.selectedLocal - 1]._id
     this.localState.id = this.selectedLocal
+    this.localState._id = this.locals[this.selectedLocal - 1]._id
     this.localState.name = this.locals[this.selectedLocal - 1].name
     this.localState.code = this.locals[this.selectedLocal - 1].code
+    this.localState.es = this.locals[this.selectedLocal - 1].es
+    this.localState.esNum = this.locals[this.selectedLocal - 1].esNum
+    if (this.locals[this.selectedLocal - 1].dsp) {
+      this.localState.dsp = this.locals[this.selectedLocal - 1].dsp
+    }
+    if (this.locals[this.selectedLocal - 1].pagecontrol) {
+      this.localState.pagecontrol = this.locals[this.selectedLocal - 1].pagecontrol
+    }
   },
   methods: {
     checkCode () {

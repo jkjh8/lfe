@@ -40,6 +40,22 @@
                   @blur="checkCode(idx)"
                 />
               </div>
+              <div class="row justify-between q-mt-md">
+                <q-toggle
+                  v-model="addLocals[idx].es"
+                  dense
+                  left-label
+                  label="E/S"
+                  color="teal-14"
+                />
+                <q-select
+                  style="width: 90px"
+                  v-model="addLocals[idx].esNum"
+                  dense
+                  label="Num of E/S"
+                  :options="[1,2,3,4]"
+                />
+              </div>
             </q-item-section>
           </q-item>
         </q-list>

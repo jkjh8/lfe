@@ -56,7 +56,7 @@
 
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
-            <q-btn round size="sm" icon="delete" @click="deleteUser(props.row)" />
+            <q-btn flat round size="sm" icon="delete" @click="deleteUser(props.row)" />
           </q-td>
         </template>
       </q-table>

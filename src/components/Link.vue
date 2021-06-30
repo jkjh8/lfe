@@ -9,6 +9,7 @@
       "teal"
     >
       <q-route-tab
+          v-if="user && user.admin"
           class="qtb"
           to="/users"
           tag="li"
@@ -17,6 +18,7 @@
           사용자 관리
       </q-route-tab>
       <q-route-tab
+        v-if="user && user.admin"
         class="qtb"
         to="/zones"
         tag="li"
@@ -25,6 +27,7 @@
         지역 설정
       </q-route-tab>
       <q-route-tab
+        v-if="user && user.level > 0"
         class="qtb"
         to="/logs"
         tag="li"
@@ -37,7 +40,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
+  computed: {
+    ...mapState({
+      user: state => state.user.user
+    })
+  },
   data () {
     return {
       index: null
