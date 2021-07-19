@@ -27,7 +27,7 @@
         지역 설정
       </q-route-tab>
       <q-route-tab
-        v-if="user && user.level > 0"
+        v-if="user && user.admin"
         class="qtb"
         to="/logs"
         tag="li"
