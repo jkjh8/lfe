@@ -8,6 +8,7 @@
         <span class="text-h6">{{ ampm }}</span>
       </div>
     </div>
+    <audio />
     <!-- <div style="max-width: 800px;">
       <q-btn class="q-ma-lg q-pa-md" size="xl" icon="mic" color="blue-grey-6">Booth 1</q-btn>
       <q-btn class="q-ma-lg q-pa-md" size="xl" icon="mic" color="blue-grey-6">Booth 2</q-btn>
@@ -38,9 +39,17 @@ export default {
       ampm: 'clock/ampm'
     })
   },
-  mounted () {
+  async mounted () {
     // console.log('main page')
     // this.getUserInfo()
+    await navigator.mediaDevices.getUserMedia({ audio: true })
+    const devices = await navigator.mediaDevices.enumerateDevices()
+    const aduiooutput = await devices.filter(device => device.kind === 'audiooutput')
+    console.log(aduiooutput)
+
+    this.$socket.on('chk', (data) => {
+      console.log('socket', data)
+    })
   }
 }
 </script>

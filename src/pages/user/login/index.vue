@@ -111,6 +111,11 @@ export default {
     } else {
       this.initLoginFromNaver(true)
     }
+    this.$socket.auth = { id: '1234' }
+    this.$socket.connect()
+  },
+  beforeDestroy () {
+    this.$socket.disconnect()
   },
   methods: {
     //
